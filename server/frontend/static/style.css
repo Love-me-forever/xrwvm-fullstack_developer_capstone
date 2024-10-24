@@ -124,3 +124,26 @@ img{
     text-align:center;
     box-shadow: 2px 2px 3px #999;  
 }
+
+.vertical {
+    border-left: 1.5px solid black;
+    height: 300px;
+    position: absolute;
+    left: 50%;
+    margin-top: -23%;
+}
+
+.text {
+    text-align: center;
+    margin-left: 50%;
+    margin-top: -23%;
+}
+.box {
+    height: 350px;
+    border: 1px solid blue;
+    border-radius: 50px;
+    width: 40%;
+    left: 30%;
+    position:relative;
+    margin-top: 0%;
+}
