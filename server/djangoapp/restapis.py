@@ -42,6 +42,20 @@ def analyze_review_sentiments(text):
 
 # request_url = sentiment_analyzer_url+"analyze/"+text
 # Add code for retrieving sentiments
+def sentiment_analyzer_url(text):    
+    sentiment_analyzer_url = "https://sentianalyzer.1o1dc12ocmut.us-south.codeengine.appdomain.cloud/"
+    request_url = sentiment_analyzer_url + "analyze/" + text
+    text = "Your text to analyze here"
+
+    response = requests.get(request_url)
+    if response.status_code == 200:
+        result = response.json() 
+        print(f"Sentiment analysis result: {result}")
+        # Assuming the result includes a sentiment field 
+        sentiment = result.get("sentiment", "No sentiment found")
+        print(f"Sentiment analysis result: {sentiment}") 
+    else:
+        print(f"Error: {response.status_code}")
 
 # def post_review(data_dict):
 def post_review(data_dict):
