@@ -1,4 +1,3 @@
-# Uncomment the imports below before you add the function code
 import requests
 import os
 from dotenv import load_dotenv
@@ -11,7 +10,7 @@ sentiment_analyzer_url = os.getenv(
     'sentiment_analyzer_url',
     default="http://localhost:5050/")
 
-# def get_request(endpoint, **kwargs):
+
 def get_request(endpoint, **kwargs):
     params = ""
     if(kwargs):
@@ -22,47 +21,42 @@ def get_request(endpoint, **kwargs):
 
     print("GET from {} ".format(request_url))
     try:
-        # Call get method of requests library with URL and parameters
         response = requests.get(request_url)
         return response.json()
-    except:
-        # If any error occurs
-        print("Network exception occurred")
+    except Exception as e:
+        print("Network exception occurred: {}".format(e))
 
-# def analyze_review_sentiments(text):
+
 def analyze_review_sentiments(text):
     request_url = sentiment_analyzer_url+"analyze/"+text
     try:
-        # Call get method of requests library with URL and parameters
         response = requests.get(request_url)
         return response.json()
-    except Exception as err:
-        print(f"Unexpected {err=}, {type(err)=}")
+    except Exception as e:
+        print("Unexpected error: {}".format(e))
         print("Network exception occurred")
 
-# request_url = sentiment_analyzer_url+"analyze/"+text
-# Add code for retrieving sentiments
-def sentiment_analyzer_url(text):    
+
+def sentiment_analyzer(text):
     sentiment_analyzer_url = "https://sentianalyzer.1o1dc12ocmut.us-south.codeengine.appdomain.cloud/"
     request_url = sentiment_analyzer_url + "analyze/" + text
-    text = "Your text to analyze here"
+    payload = "Your text to analyze here"
 
     response = requests.get(request_url)
     if response.status_code == 200:
         result = response.json() 
-        print(f"Sentiment analysis result: {result}")
-        # Assuming the result includes a sentiment field 
+        print("Sentiment analysis result: {}".format(result))
         sentiment = result.get("sentiment", "No sentiment found")
-        print(f"Sentiment analysis result: {sentiment}") 
+        print("Sentiment analysis result: {}".format(sentiment))
     else:
-        print(f"Error: {response.status_code}")
+        print("Error: {}".format(response.status_code))
 
-# def post_review(data_dict):
+
 def post_review(data_dict):
     request_url = backend_url+"/insert_review"
     try:
-        response = requests.post(request_url,json=data_dict)
+        response = requests.post(request_url, json=data_dict)
         print(response.json())
         return response.json()
-    except:
-        print("Network exception occurred")
+    except Exception as e:
+        print("Network exception occurred: {}".format(e))

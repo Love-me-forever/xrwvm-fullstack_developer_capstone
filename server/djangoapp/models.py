@@ -11,16 +11,20 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class CarMake(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
+    created_at = models.DateTimeField(default=now)
+    updated_at = models.DateTimeField(auto_now=True)
     # Other fields as needed
 
     def __str__(self):
         return self.name  # Return the name as the string representation
 
 
-# <HINT> Create a Car Model model `class CarModel(models.Model):`:
+# <HINT> Create a Car Model model `class CarModel(models.Model):`
 class CarModel(models.Model):
     car_make = models.ForeignKey(CarMake, on_delete=models.CASCADE)  # Many-to-One relationship
     name = models.CharField(max_length=100)
+    created_at = models.DateTimeField(default=now)
+    updated_at = models.DateTimeField(auto_now=True)
     CAR_TYPES = [
         ('SEDAN', 'Sedan'),
         ('SUV', 'SUV'),
