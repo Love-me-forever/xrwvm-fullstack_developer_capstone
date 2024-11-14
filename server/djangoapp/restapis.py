@@ -53,10 +53,12 @@ def sentiment_analyzer(text):
 
 
 def post_review(data_dict):
-    request_url = backend_url+"/insert_review"
+    request_url = f"{backend_url}/insert_review"
     try:
         response = requests.post(request_url, json=data_dict)
+        response.raise_for_status()
         print(response.json())
         return response.json()
     except Exception as e:
         print("Network exception occurred: {}".format(e))
+
