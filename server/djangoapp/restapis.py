@@ -40,7 +40,7 @@ def analyze_review_sentiments(text):
 def sentiment_analyzer(text):
     sentiment_analyzer_url = "https://sentianalyzer.1o1dc12ocmut.us-south.codeengine.appdomain.cloud/"
     request_url = sentiment_analyzer_url + "analyze/" + text
-    payload = "Your text to analyze here"
+    encoded_text = urllib.parse.quote(text)
 
     response = requests.get(request_url)
     if response.status_code == 200:
