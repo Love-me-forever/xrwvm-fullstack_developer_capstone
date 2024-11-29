@@ -6,11 +6,17 @@ class CarModelInline(admin.TabularInline):
     model = CarModel
     extra = 3
 
+class CarAdmin(admin.ModelAdmin):
+    inlines = [CarModelInline]
+
+
 # CarMakeAdmin class with CarModelInline
 class CarMakeAdmin(admin.ModelAdmin):
     list_display = ('name', 'description')
     search_fields = ['name']
     inlines = [CarModelInline]
+
+admin.site.register(CarMake, CarMakeAdmin)
 
 # CarModelAdmin class
 class CarModelAdmin(admin.ModelAdmin):
@@ -18,8 +24,7 @@ class CarModelAdmin(admin.ModelAdmin):
     list_filter = ['car_make', 'type', 'year']
     search_fields = ['name', 'car_make__name']
 
-# Registering models with their respective admins
-admin.site.register(CarMake, CarMakeAdmin)
+
 admin.site.register(CarModel, CarModelAdmin)
 
 

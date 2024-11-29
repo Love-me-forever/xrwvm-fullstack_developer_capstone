@@ -1,5 +1,6 @@
 import requests
 import os
+import urllib.parse
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -13,11 +14,11 @@ sentiment_analyzer_url = os.getenv(
 
 def get_request(endpoint, **kwargs):
     params = ""
-    if(kwargs):
+    if (kwargs):
         for key,value in kwargs.items():
-            params=params+key+"="+value+"&"
+            params = params + key + "=" + value + "&"
 
-    request_url = backend_url+endpoint+"?"+params
+    request_url = backend_url + endpoint + "?" + params
 
     print("GET from {} ".format(request_url))
     try:
@@ -28,7 +29,7 @@ def get_request(endpoint, **kwargs):
 
 
 def analyze_review_sentiments(text):
-    request_url = sentiment_analyzer_url+"analyze/"+text
+    request_url = sentiment_analyzer_url + "analyze/" + text
     try:
         response = requests.get(request_url)
         return response.json()
@@ -38,18 +39,24 @@ def analyze_review_sentiments(text):
 
 
 def sentiment_analyzer(text):
-    sentiment_analyzer_url = "https://sentianalyzer.1o1dc12ocmut.us-south.codeengine.appdomain.cloud/"
-    request_url = sentiment_analyzer_url + "analyze/" + text
+    sentiment_analyzer_url = (
+        "https://sentianalyzer.1o1dc12ocmut.us-south.codeengine.appdomain.cloud/"
+    )
     encoded_text = urllib.parse.quote(text)
-
-    response = requests.get(request_url)
-    if response.status_code == 200:
-        result = response.json() 
-        print("Sentiment analysis result: {}".format(result))
-        sentiment = result.get("sentiment", "No sentiment found")
-        print("Sentiment analysis result: {}".format(sentiment))
-    else:
-        print("Error: {}".format(response.status_code))
+    request_url = sentiment_analyzer_url + "analyze/" + encoded_text
+    
+    try:
+        response = requests.get(request_url)
+        if response.status_code == 200:
+            result = response.json() 
+            print("Sentiment analysis result: {}".format(result))
+            sentiment = result.get("sentiment", "No sentiment found")
+            print("Sentiment analysis result: {}".format(sentiment))
+        else:
+            print("Error: {}".format(response.status_code))
+    except Exception as e:
+        print("Unexpected error: {}".format(e))
+        print("Network exception occurred")
 
 
 def post_review(data_dict):
